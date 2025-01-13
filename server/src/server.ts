@@ -15,6 +15,8 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log('__dirname', __dirname);
+
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   // app.use(express.static(path.join(__dirname, '../client/build')));
@@ -22,6 +24,8 @@ if (process.env.NODE_ENV === 'production') {
   // app.use(express.static('../client/dist/index.html'));
 
   const clientDistPath = path.resolve(__dirname, '../client/dist');
+  console.log('log ../client/dis path', clientDistPath);
+  
   app.use(express.static(clientDistPath));
 
   // Serve the index.html for any unmatched routes
