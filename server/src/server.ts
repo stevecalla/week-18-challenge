@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 
   // Serve the index.html for any unmatched routes
   app.get('*', (req, res) => {
+    console.log(req);
     res.sendFile(path.join(clientDistPath, 'index.html'));
   });
 } else {
