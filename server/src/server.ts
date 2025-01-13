@@ -1,5 +1,5 @@
 import express from 'express';
-// import path from 'node:path';
+import path from 'node:path';
 import db from './config/connection.js';
 import routes from './routes/index.js';
 
@@ -13,7 +13,17 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   // app.use(express.static(path.join(__dirname, '../client/build')));
   // app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.use(express.static('../client/dist/index.html'));
+  // app.use(express.static('../client/dist/index.html'));
+
+  const clientDistPath = path.resolve(__dirname, '../client/dist');
+  app.use(express.static(clientDistPath));
+
+  // Serve the index.html for any unmatched routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+} else {
+  console.log('Running in development mode');
 }
 
 app.use(routes);
